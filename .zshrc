@@ -6,7 +6,6 @@ export SDL_VIDEODRIVER=wayland
 
 export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus
 
-alias LaunchHypr='dbus-run-session Hyprland'
 export XDG_CONFIG_HOME="$HOME/.config"
 export FONTCONFIG_FILE="XDG_CONFIG_HOME/fontconfig/fonts.conf"
 
@@ -56,11 +55,6 @@ compinit
 zstyle ':completion:*' menu select    # Afficher le menu de complétion avec des flèches
 zstyle ':completion:*' list-colors 'yes'  # Activer les couleurs dans les suggestions
 zstyle ':completion:*:default' matcher-list 'm:{a-z}={A-Z}'  # Complétion insensible à la casse
-zstyle ':completion:*:*:*:*' completion 10
-
-# Définir un délai d'attente pour l'autocomplétion
-zstyle ':completion:*' completer _complete _expand _approximate
-zstyle ':completion:*' file-patterns '*(.D)'
 
 # Configurer la sortie de l'environnement graphique avec Sway
 export SWAYSOCK=$(find /run/user/$(id -u) -name 'wayland-0')
