@@ -1,1 +1,102 @@
+{
+"$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+"logo": {
+  "source": "~/.config/fastfetch/asciiArt/Alpine.txt",
+  // "type": "small",
+  "height": 15,
+  "width": 30,
+  "padding": {
+    "top": 1
+    }
+  },
 
+"display": {
+"separator": " 󰑃  "
+},
+"modules": [
+    "break",
+    {
+    "type": "os",
+    "key": " DISTRO",
+    "keyColor": "red"
+    },
+    {
+    "type": "kernel",
+    "key": "    ├ ",
+    "keyColor": "red"
+    },
+    {
+    "type": "packages",
+    "key": "    ├ 󰏖",
+    "keyColor": "red"
+    },
+    {
+    "type": "shell",
+    "key": "    └ ",
+    "keyColor": "red"
+    },
+    {
+    "type": "wm",
+    "key": " DE/WM",
+    "keyColor": "cyan"
+    },
+    {
+    "type": "wmtheme",
+    "key": "    ├ 󰉼",
+    "keyColor": "cyan"
+    },
+    {
+    "type": "icons",
+    "key": "    ├ 󰀻",
+    "keyColor": "cyan"
+    },
+    {
+    "type": "terminalfont",
+    "key": "    ├ ",
+    "keyColor": "cyan",
+    },
+    {
+    "type": "terminal",
+    "key": "    └ ",
+    "keyColor": "cyan"
+    },
+    {
+    "type": "host",
+    "key": "󰌢 SYSTEM",
+    "keyColor": "yellow"
+    },
+    {
+    "type": "cpu",
+    "key": "    ├ 󰻠",
+    "keyColor": "yellow"
+    },
+    {
+    "type": "gpu",
+    "key": "    ├ 󰻑",
+    "format": "{2}",
+    "keyColor": "yellow"
+    },
+    {
+    "type": "display",
+    "key": "    ├ 󰍹",
+    "keyColor": "yellow",
+    "compactType": "original-with-refresh-rate"
+    },
+    {
+    "type": "memory",
+    "key": "    ├ 󰾆",
+    "keyColor": "yellow"
+    },
+    {
+    "type": "uptime",
+    "key": "    └ 󰅐",
+    "keyColor": "yellow"
+    },
+
+  //  {
+  //  "type": "custom",
+  //  "format": "\u001b[90m  \u001b[31m  \u001b[32m  \u001b[33m  \u001b[34m  \u001b[35m  \u001b[36m  \u001b[37m  \u001b[38m  \u001b[39m  \u0>
+  //  },
+    "break",
+    ]
+}
