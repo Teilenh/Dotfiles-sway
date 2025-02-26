@@ -1,1 +1,160 @@
+#########################################
+### ### Teilen's Sway Config file ### ###
+#########################################
+set $mod Mod4
+set $term kitty
+set $browser firefox-esr
+set $AppMenu rofi -show drun
+set $fileExplorer thunar
+
+###################
+### SETUP COLOR ###
+###################
+# noir
+set $black1 #7E7E7E
+set $black2 #D3D3D3
+# rouge
+set $red1 #FF6F6F
+set $red2 #FFB3B3
+# Vert
+set $green1 #6FFF6F
+set $green2 #B3FFB3
+# jaune
+set $yellow1 #FFFF66
+set $yellow2 #FFFFb3
+# bleu
+set $blue1 #4D9FFF
+set $blue2 #A3C1DA
+# magenta
+set $magenta1 #FFA8A9
+set $magenta2 #FEA8A9
+# Cyan
+set $cyan1 #66FFFF
+set $cyan2 #B3FFFF
+# blanc
+set $white #AFFFFA
+set $white2 #E5E5E5
+
+#############
+### INPUT ###
+#############
+input * {
+   xkb_layout be
+   xkb_variant nodeadkeys
+}
+
+#####################
+### SCREEN CONFIG ###
+#####################
+
+output DP-1 {
+   pos 0 0
+}
+output HDMI-A-1 {
+   pos 1920 0
+}
+
+###########
+### BAR ###
+###########
+
+bar {
+   position top
+   font pango:Nerd Font, Terminus,
+   status_command i3status
+   separator_symbol ° 
+   strip_workspace_numbers yes
+   workspace_buttons yes
+
+   colors {
+   	background #00000000
+	statusline #FFFFFF
+	focused_workspace $yellow1 $yellow2 $black1
+	active_workspace $magenta1 $magenta2 $black1
+	inactive_workspace $white $white2 $black1
+    }   
+}
+
+##################
+### Decoration ###
+##################
+# border
+default_border pixel 2
+client.focused $blue2 $blue2 $white2 $blue1
+client.focused_inactive $cyan1 $cyan1 $black2 $cyan2
+client.unfocused $white2 $black1 $black2 $white2
+
+# gaps
+gaps inner 7
+gaps outer 3
+
+##################
+### Workspaces ###
+##################
+
+workspace 1 output DP-1
+workspace 2 output HDMI-A-1
+workspace 3 output DP-1
+workspace 4 
+workspace 5
+
+#################
+### Wallpaper ###
+#################
+exec swaybg -i ~/Images/wall.jpg -m fill
+
+##################
+### Raccourcis ###
+##################
+
+# lancé les app
+bindsym $mod+t exec $term
+bindsym $mod+b exec $browser
+bindsym $mod+d exec $AppMenu
+bindsym $mod+e exec $fileExplorer
+bindsym $mod+v exec pavucontrol
+
+# action
+bindsym $mod+q kill
+bindsym $mod+Shift+q exit
+bindsym $mod+Shift+r reload
+bindsym $mod+Up focus up
+bindsym $mod+Down focus down
+bindsym $mod+Left focus left
+bindsym $mod+Right focus right
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Right move right
+bindsym $mod+f fullscreen toggle
+bindsym $mod+space floating toggle
+bindsym $mod+shift+f layout toggle
+bindsym --whole-window $mod+button1 move
+bindsym --whole-window $mod+button3 resize
+bindsym $mod+Ctrl+Up resize shrink height 15px
+bindsym $mod+Ctrl+Down resize grow height 15px
+bindsym $mod+Ctrl+Left resize shrink width 15px
+bindsym $mod+Ctrl+Right resize grow width 15px
+
+# gestion workspace
+bindsym $mod+ampersand workspace 1
+bindsym $mod+eacute workspace 2
+bindsym $mod+quotedbl workspace 3
+bindsym $mod+apostrophe workspace 4
+bindsym $mod+parenleft workspace 5
+bindsym $mod+Shift+ampersand move container to workspace 1
+bindsym $mod+Shift+eacute move container to workspace 2
+bindsym $mod+Shift+quotedbl move container to workspace 3
+bindsym $mod+Shift+apostrophe move container to workspace 4
+bindsym $mod+Shift+parenleft move container to workspace 5
+
+
+
+
+
+
+
+
+
+
 
