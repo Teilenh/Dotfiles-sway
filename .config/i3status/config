@@ -1,1 +1,43 @@
+general {
+    output_format = "i3bar"
+    colors = true
+    interval = 5
+    markup = "pango"
+}
 
+order += "volume master"
+order += "wireless wlan0"
+order += "ethernet eth0"
+order += "load"
+order += "memory"
+order += "tztime local"
+
+volume master {
+    format = "<span foreground='#FFA500' weight='bold'>🔊 %volume%%</span>"
+    format_muted = "<span foreground='#FF5555' weight='bold'>🔇 Muted</span>"
+    device = "default"
+    mixer = "Master"
+    mixer_idx = 0
+}
+
+wireless wlan0 {
+    format_up = "<span background='#F8D39D' foreground='#73ABFF'>  : On: %essid</span>"
+    format_down = "<span background='#FFA8A8' foreground='#2B2C2D'>   : down </span>"
+}
+
+ethernet eth0 {
+    format_up = "<span background='#F8D39D' foreground='#2C2B28'>  :%ip </span>"
+    format_down = "<span background='#FFA8A' foreground='#2A2A2B'> Ethernet: down </span>"
+}
+
+load {
+    format = "<span background='#FFA8A8' foreground='#2A2A28'> Load: %1min </span>"
+}
+
+memory {
+    format = "<span background='#F8D39D' foreground='#2B2A28'> %used | %available </span>"
+}
+
+tztime local {
+    format = "<span background='#FFA8A8' foreground='#2B2A29'> %m-%d %H:%M </span>"
+}
