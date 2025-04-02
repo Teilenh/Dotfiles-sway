@@ -148,7 +148,16 @@ bindsym $mod+Shift+quotedbl move container to workspace 3
 bindsym $mod+Shift+apostrophe move container to workspace 4
 bindsym $mod+Shift+parenleft move container to workspace 5
 
-
+############
+### exec ###
+############
+exec dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway &
+exec /usr/libexec/xdg-desktop-portal-gtk &
+exec /usr/libexec/xdg-desktop-portal-wlr &
+exec /usr/libexec/xdg-desktop-portal-gnome &
+exec pipewire &
+exec pipewire-pulse &
+exec wireplumber &
 
 
 
