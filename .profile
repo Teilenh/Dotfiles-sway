@@ -4,5 +4,4 @@ export XDG_SESSION_DESKTOP=Hyprland
 export WAYLAND_DISPLAY=/run/user/1000/wayland-1
 export XDG_RUNTIME_DIR=/run/user/$(id -u)
 export DISPLAY=
-alias LaunchHypr='dbus-run-session Hyprland'
 export $(dbus-launch)
