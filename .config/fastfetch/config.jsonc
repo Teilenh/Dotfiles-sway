@@ -1,10 +1,10 @@
 {
 "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
 "logo": {
-  "source": "~/.config/fastfetch/Alpine.txt",
-  // "type": "small",
-  "height": 15,
-  "width": 30,
+  "source": "~/.config/fastfetch/ditto.png",
+  "type": "kitty-direct",
+  "height": 13,
+  "width": 32,
   "padding": {
     "top": 1
     }
@@ -32,7 +32,12 @@
     },
     {
     "type": "shell",
-    "key": "    └ ",
+    "key": "    ├ ",
+    "keyColor": "red"
+    },
+    {
+    "type": "terminal",
+    "key": "    └ ",
     "keyColor": "red"
     },
     {
@@ -56,11 +61,6 @@
     "keyColor": "cyan",
     },
     {
-    "type": "terminal",
-    "key": "    └ ",
-    "keyColor": "cyan"
-    },
-    {
     "type": "host",
     "key": "󰌢 SYSTEM",
     "keyColor": "yellow"
@@ -70,18 +70,18 @@
     "key": "    ├ 󰻠",
     "keyColor": "yellow"
     },
-    {
-    "type": "gpu",
-    "key": "    ├ 󰻑",
-    "format": "{2}",
-    "keyColor": "yellow"
-    },
-    {
-    "type": "display",
-    "key": "    ├ 󰍹",
-    "keyColor": "yellow",
-    "compactType": "original-with-refresh-rate"
-    },
+    //{
+    //"type": "gpu",
+    //"key": "    ├ 󰻑",
+    //"format": "{2}",
+    //"keyColor": "yellow"
+    //},
+    //{
+    //"type": "display",
+    //"key": "    ├ 󰍹",
+    //"keyColor": "yellow",
+    //"compactType": "original-with-refresh-rate"
+    //},
     {
     "type": "memory",
     "key": "    ├ 󰾆",
@@ -92,12 +92,6 @@
     "key": "    └ 󰅐",
     "keyColor": "yellow"
     },
-        {
-            "type": "command",
-            "key": "󱦟 ",
-            "keyColor": "34",
-            "text": "birth_install=$(stat -c %W /); current=$(date +%s); time_progression=$((current - birth_install)); days_difference=$((time_progression / 86400)); echo $days_difference days"
-        },
 
   //  {
   //  "type": "custom",
