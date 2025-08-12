@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -euo
+set -eu
 
 ##### VARIABLES #####
 PATH_TO_REPO="/etc/apk/repositories"
