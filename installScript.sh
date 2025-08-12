@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -euo pipefail
+set -euo
 
 ##### VARIABLES #####
 PATH_TO_REPO="/etc/apk/repositories"
@@ -48,7 +48,7 @@ service elogind start
 echo "###############################################################"
 echo " creation du conteneur JV"
 doas -u "${USER}" distrobox-create --name "${CONTAINER_NAME}" --image "${CONTAINER_IMAGE}" --persistent-home --pkgmanager pacman --as-root
-doas -u "${USER}" distrobox-enter ${CONTAINER_NAME} -- sh -c "set -euo pipefail pacman -S --noconfirm \
+doas -u "${USER}" distrobox-enter ${CONTAINER_NAME} -- sh -c "set -euo pacman -S --noconfirm \
         steam lutris \
         wine winetricks \
         lib32-vulkan-radeon vulkan-radeon \
