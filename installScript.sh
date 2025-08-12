@@ -37,8 +37,6 @@ echo "###############################################################"
 echo "Installation des packages essentiels"
 apk add sway swww swayimg waybar kitty swaync sway-zsh-completion swaync-zsh-completion ly pipewire pipewire-openrc pipewire-tools pipewire-pulse-openrc pipewire-alsa wireplumber wireplumber-openrc mesa-dri-gallium@edge mesa-va-gallium@edge mesa-vulkan-ati@edge vulkan-headers@edge vulkan-tools@edge libdrm@edge libinput@edge distrobox elogind elogind-openrc dbus dbus-openrc font-noto terminus-font rofi-wayland wlsunset wlsunset-openrc firefox-esr openrc-user@edge libinput-zsh-completion
 
-apk add ibdrm@edge libinput@edge distrobox dbus dbus-openrc elogind elogind-openrc font-noto terminus-font firefox openrc-user@edge
-
 echo "###############################################################"
 echo "activation de elogind et dbus"
 rc-update add dbus default
