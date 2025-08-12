@@ -59,13 +59,91 @@ doas -u "${USER}" distrobox-enter ${CONTAINER_NAME} -- sh -c "set -euo pipefail 
         mangohud lib32-mangohud umu-launcher
 "
 
-
+##### SCRIPTS UTILES #####
 echo "###############################################################"
+echo "  Création des scripts utiles"
 
+# Création du répertoire Wallpapers
+doas -u "${USER}" mkdir -p "/home/${USER}/Images/Wallpapers"
+
+# Script pour démarrer Steam
+doas -u "${USER}" sh -c "
+cat > /home/${USER}/start-gaming <<'GAMINGEOF'
+#!/bin/sh
+# Script pour démarrer Steam dans distrobox
+export XDG_RUNTIME_DIR=\"/run/user/\$(id -u)\"
+echo \" Démarrage de Steam ...\"
+distrobox-enter arch-JV -- steam
+GAMINGEOF
+chmod +x /home/${USER}/start-gaming
+"
+
+# Script d'entrée dans le conteneur
+doas -u "${USER}" sh -c "
+cat > /home/${USER}/gaming-shell <<'SHELLEOF'
+#!/bin/sh
+# Script pour ouvrir un shell dans le conteneur gaming
+export XDG_RUNTIME_DIR=\"/run/user/\$(id -u)\"
+echo \" ouverture de la distrobox arch-JV...\"
+distrobox-enter arch-JV
+SHELLEOF
+chmod +x /home/${USER}/gaming-shell
+"
+
+# Script pour sélectionner des wallpapers avec rofi
+doas -u "${USER}" sh -c "
+cat > /home/${USER}/wallpaper-picker <<'WALLPAPEREOF'
+#!/bin/sh
+# Script pour sélectionner et appliquer un wallpaper avec rofi + swww
+
+WALLPAPER_DIR=\"/home/${USER}/Images/Wallpapers\"
+
+# Vérifier que le répertoire existe
+if [ ! -d \"\$WALLPAPER_DIR\" ]; then
+    echo \"Erreur: Le répertoire \$WALLPAPER_DIR n'existe pas\"
+    exit 1
+fi
+
+# Vérifier qu'il y a des images
+if [ -z \"\$(find \"\$WALLPAPER_DIR\" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.bmp' \) 2>/dev/null)\" ]; then
+    echo \"Aucune image trouvée dans \$WALLPAPER_DIR\"
+    echo \"Formats supportés: jpg, jpeg, png, webp, bmp\"
+    exit 1
+fi
+
+# Lister les images et les afficher avec rofi
+cd \"\$WALLPAPER_DIR\"
+SELECTED=\$(find . -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' -o -iname '*.bmp' \) | sed 's|^\./||' | sort | rofi -dmenu -i -p \"Choisir un wallpaper\")
+
+# Si une sélection a été faite
+if [ -n \"\$SELECTED\" ]; then
+    WALLPAPER_PATH=\"\$WALLPAPER_DIR/\$SELECTED\"
+    echo \" Application du wallpaper: \$SELECTED\"
+    swww img \"\$WALLPAPER_PATH\"
+    if [ \$? -eq 0 ]; then
+        echo \" Wallpaper appliqué avec succès\"
+    else
+        echo \" Erreur lors de l'application du wallpaper\"
+    fi
+else
+    echo \"Aucune sélection\"
+fi
+WALLPAPEREOF
+chmod +x /home/${USER}/wallpaper-picker
+"
+
+##### FINALISATION #####
+echo "###############################################################"
+echo " Création du répertoire de configuration"
+doas -u "${USER}" sh -c "
+    mkdir -p ~/.config/sway
+    mkdir -p ~/.config/waybar
+    mkdir -p ~/.config/pipewire
+"
 
 #### CONFIGURATION UTILISATEUR #####
 echo "###############################################################"
-echo "👤 Configuration de l'utilisateur ${USER}"
+echo " Configuration de l'utilisateur ${USER}"
 addgroup "${USER}" input 2>/dev/null || true
 addgroup "${USER}" video 2>/dev/null || true
 addgroup "${USER}" audio 2>/dev/null || true
@@ -92,9 +170,10 @@ rc-service -U pipewire start
 "
 
 
+
 cat <<EOF
 ═══════════════════════════════════════════════════════════════
- 🎮 POST-INSTALLATION ALPINE LINUX GAMING TERMINÉE ! 🎮
+  POST-INSTALLATION ALPINE LINUX GAMING TERMINÉE ! 
 ═══════════════════════════════════════════════════════════════
 
 PROCHAINES ÉTAPES :
@@ -106,14 +185,9 @@ PROCHAINES ÉTAPES :
    sway
 
   SCRIPTS DISPONIBLES DANS VOTRE HOME :
-   ./start-gaming           # Démarrer Steam
-   ./gaming-shell          # Shell dans le conteneur  
-   ./wallpaper-picker      # Sélecteur de wallpaper avec rofi
-
-  GESTION DES WALLPAPERS :
-   • Placez vos images dans ~/Images/Wallpapers/
-   • Lancez ./wallpaper-picker pour choisir
-   • Formats: jpg, jpeg, png, webp, bmp
+   ./start-gaming           # Démarre Steam
+   ./gaming-shell          # rentré dans la distrobox
+   ./wallpaper-picker      # selection du wallpaper avec rofi
 
   SERVICES UTILISATEUR (dans Sway) :
    rc-service --user pipewire start
