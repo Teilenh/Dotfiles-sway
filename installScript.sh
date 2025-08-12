@@ -52,3 +52,64 @@ ECHO "activation de pipewire"
 rc-update -U add pipewire
 rc-service -U pipewire start
 
+
+echo "###############################################################"
+echo "Création d’un service OpenRC pour Sway avec mkdir runtime"
+
+SERVICE_FILE="/etc/init.d/sway"
+cat > "${SERVICE_FILE}" <<EOF2
+#!/sbin/openrc-run
+
+# Sway Wayland compositor service
+
+description="Sway Wayland compositor"
+
+depend() {
+    need localmount seatd
+    use dbus
+}
+
+start_pre() {
+    if [ ! -d "/run/user/${USER_UID}" ]; then
+        mkdir -p "/run/user/${USER_UID}"
+        chown ${USER_GAMING}:${USER_GAMING} "/run/user/${USER_UID}"
+        chmod 700 "/run/user/${USER_UID}"
+    fi
+    export XDG_RUNTIME_DIR="/run/user/${USER_UID}"
+    export PULSE_SERVER="unix:/run/user/${USER_UID}/pulse/native"
+}
+
+start() {
+    ebegin "Démarrage de Sway"
+    su ${USER_GAMING} -c "exec sway"
+    eend $?
+}
+
+stop() {
+    ebegin "Arrêt de Sway"
+    killall sway
+    eend $?
+}
+EOF2
+chmod +x "${SERVICE_FILE}"
+rc-update add sway default
+
+echo "###############################################################"
+# Fin
+cat <<EOF
+
+ Post-installation complète.
+
+► Pour démarrer Sway comme service OpenRC :
+   rc-service sway start
+
+► Pour arrêter Sway :
+   rc-service sway stop
+
+► Pour démarrer Steam :
+   doas -u ${USER_GAMING} distrobox-enter ${CONTAINER_NAME} -- steam
+
+► Pour toute autre commande dans le container :
+   doas -u ${USER_GAMING} distrobox-enter ${CONTAINER_NAME} -- <commande>
+
+EOF
