@@ -169,7 +169,7 @@ rc-service -U pipewire start
 
 cat <<EOF
 ═══════════════════════════════════════════════════════════════
-  POST-INSTALLATION ALPINE LINUX GAMING TERMINÉE ! 
+  TERMINÉE ! 
 ═══════════════════════════════════════════════════════════════
 
 PROCHAINES ÉTAPES :
