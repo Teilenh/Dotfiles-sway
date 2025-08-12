@@ -167,8 +167,6 @@ rc-service -U pipewire start
     mkdir -p ~/.local/share/wallpapers
 "
 
-
-
 cat <<EOF
 ═══════════════════════════════════════════════════════════════
   POST-INSTALLATION ALPINE LINUX GAMING TERMINÉE ! 
