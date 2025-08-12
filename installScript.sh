@@ -21,11 +21,13 @@ cp "${PATH_TO_REPO}" "${PATH_TO_REPO}${BACKUP_SUFFIX}"
 echo "###############################################################"
 echo "Configuration des dépots edge"
 cat > "${PATH_TO_REPO}" <<EOF 
-http://mirrors.ircam.fr/pub/alpine/v$(cut -d. -f1-2 /etc/alpine-release)/main
-http://mirrors.ircam.fr/pub/alpine/v$(cut -d. -f1-2 /etc/alpine-release)/community
-http://mirrors.ircam.fr/pub/alpine/edge/main @edge
-http://mirrors.ircam.fr/pub/alpine/edge/community @edge
-http://mirrors.ircam.fr/pub/alpine/edge/testing @testing
+http://mirrors.hostico.ro/alpinelinux/v$(cut -d. -f1-2 /etc/alpine-release)/main
+http://mirrors.hostico.ro/alpinelinux/v$(cut -d. -f1-2 /etc/alpine-release)/community
+http://alpinelinux.mirrors.ovh.net/v$(cut -d. -f1-2 /etc/alpine-release)/main
+http://alpinelinux.mirrors.ovh.net/v$(cut -d. -f1-2 /etc/alpine-release)/community
+http://mirrors.hostico.ro/alpinelinux/edge/main @edge
+http://mirrors.hostico.ro/alpinelinux/edge/community @edge
+http://mirrors.hostico.ro/alpine/edge/testing @testing
 EOF
 
 ##### MAJ sys #####
