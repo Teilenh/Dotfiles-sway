@@ -4,7 +4,7 @@ set -euo pipefail
 
 ##### VAR #####
 PATH_TO_REPO="/etc/apk/repositories"
-BACKUP_SUFFIX=".bak-$(date + %Y%m%d%H%M )"
+BACKUP_SUFFIX=".bak-$(date +%Y%m%d%H%M )"
 CONTAINER_NAME="arch-JV"
 CONTAINER_IMAGE="archlinux:latest"
 USER="${SUDO_USER:-$(whoami)}"
@@ -31,9 +31,11 @@ apk update && apk upgrade --available
 
 ##### ESSENTIAL PACKAGE #####
 echo "###############################################################"
-echo "Installation des package essentiel"
-apk add sway sway bg waybar swaync mako pipewire pipewire-pulse pipewire-alsa wireplumber mesa@edge mesa-vulkan-amd@edge vulkan-headers@edge libdrm@edge libinput@edge podman-distro distrobox seatd seatd-openrc
-
+echo "Installation des packages essentiels"
+apk add sway swayimg waybar swaync pipewire pipewire-pulse pipewire-alsa wireplumber \
+        mesa@edge mesa-vulkan-amd@edge vulkan-headers@edge libdrm@edge libinput@edge \
+        podman distrobox seatd seatd-openrc dbus dbus-openrc elogind elogind-openrc \
+        font-noto terminus-font rofi-wayland 
 
 echo "###############################################################"
 echo "activation de seatd"
