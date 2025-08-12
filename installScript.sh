@@ -10,7 +10,7 @@ USER="${SUDO_USER:-$(whoami)}"
 USER_UID="$(id -u ${USER})"
 
 echo "###############################################################"
-echo "SCRIPT POST-INSTALLATION ALPINE LINUX GAMING"
+echo "SCRIPT de POST-INSTALLATION ALPINE LINUX GAMING"
 echo "###############################################################"
 
 
