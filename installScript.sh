@@ -49,24 +49,24 @@ service elogind start
 
 echo "###############################################################"
 echo " creation du conteneur JV"
-doas -u "${USER}" distrobox-create --name "${CONTAINER_NAME}" --image "${CONTAINER_IMAGE}" --persistent-home --pkgmanager pacman --as-root
-doas -u "${USER}" distrobox-enter ${CONTAINER_NAME} -- sh -c "set -eu pacman -S --noconfirm \
+su - "${USER}" -c "distrobox-create --name "${CONTAINER_NAME}" --image "${CONTAINER_IMAGE}" "
+su - "${USER}" -c "distrobox-enter ${CONTAINER_NAME} -- sh -c "pacman -Syu --noconfirm \
         steam lutris \
         wine winetricks \
         lib32-vulkan-radeon vulkan-radeon \
         lib32-mesa mesa \
         gamemode lib32-gamemode \
         mangohud lib32-mangohud umu-launcher
-"
+" "
 
 ##### SCRIPTS UTILES #####
 echo "###############################################################"
 echo "  Création des scripts utiles"
 
-# Création du répertoire Wallpapers
+echo "Création du répertoire Wallpapers"
 doas -u "${USER}" mkdir -p "/home/${USER}/Images/Wallpapers"
 
-# Script pour démarrer Steam
+echo "Script pour démarrer Steam"
 doas -u "${USER}" sh -c "
 cat > /home/${USER}/start-gaming <<'GAMINGEOF'
 #!/bin/sh
@@ -78,7 +78,7 @@ GAMINGEOF
 chmod +x /home/${USER}/start-gaming
 "
 
-# Script d'entrée dans le conteneur
+echo " Script d'entrée dans le conteneur"
 doas -u "${USER}" sh -c "
 cat > /home/${USER}/gaming-shell <<'SHELLEOF'
 #!/bin/sh
@@ -90,7 +90,7 @@ SHELLEOF
 chmod +x /home/${USER}/gaming-shell
 "
 
-# Script pour sélectionner des wallpapers avec rofi
+echo  "Script pour sélectionner des wallpapers avec rofi"
 doas -u "${USER}" sh -c "
 cat > /home/${USER}/wallpaper-picker <<'WALLPAPEREOF'
 #!/bin/sh
