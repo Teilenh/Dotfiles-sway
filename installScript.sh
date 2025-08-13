@@ -37,7 +37,7 @@ apk update && apk upgrade --available
 ##### ESSENTIAL PACKAGE #####
 echo "###############################################################"
 echo "Installation des packages essentiels"
-apk add sway swww swayimg waybar kitty swaync sway-zsh-completion swaync-zsh-completion ly pipewire pipewire-openrc pipewire-tools pipewire-pulse-openrc pipewire-alsa wireplumber wireplumber-openrc mesa-dri-gallium mesa-va-gallium mesa-vulkan-ati vulkan-headers vulkan-tools@edge libdrm@edge libinput@edge distrobox font-noto terminus-font rofi-wayland wlsunset wlsunset-openrc firefox-esr openrc-user@edge libinput-zsh-completion
+apk add sway swww swayimg waybar kitty swaync sway-zsh-completion swaync-zsh-completion swayidle wl-clipboard grim swaylock swaylockd xwayland ly pipewire pipewire-openrc pipewire-tools pipewire-pulse-openrc pipewire-alsa wireplumber wireplumber-openrc mesa-dri-gallium mesa-va-gallium mesa-vulkan-ati vulkan-headers vulkan-tools@edge libdrm@edge libinput@edge distrobox font-noto font-dejavu terminus-font rofi-wayland wlsunset wlsunset-openrc firefox-esr openrc-user@edge libinput-zsh-completion
 
 echo "###############################################################"
 echo "activation de elogind et dbus"
