@@ -16,11 +16,11 @@ echo "###############################################################"
 
 echo "###############################################################"
 echo "sauvegarde des dépot actuels" 
-cp "${PATH_TO_REPO}" "${PATH_TO_REPO}${BACKUP_SUFFIX}"
+doas cp "${PATH_TO_REPO}" "${PATH_TO_REPO}${BACKUP_SUFFIX}"
 
 echo "###############################################################"
 echo "Configuration des dépots edge"
-cat > "${PATH_TO_REPO}" <<EOF 
+doas cat > "${PATH_TO_REPO}" <<EOF 
 http://mirrors.hostico.ro/alpinelinux/v$(cut -d. -f1-2 /etc/alpine-release)/main
 http://mirrors.hostico.ro/alpinelinux/v$(cut -d. -f1-2 /etc/alpine-release)/community
 http://alpinelinux.mirrors.ovh.net/v$(cut -d. -f1-2 /etc/alpine-release)/main
@@ -32,25 +32,25 @@ EOF
 
 ##### MAJ sys #####
 echo "MAJ systéme"
-apk update && apk upgrade --available
+doas apk update && doas apk upgrade --available
 
 ##### ESSENTIAL PACKAGE #####
 echo "###############################################################"
 echo "Installation des packages essentiels"
-apk add sway swww swayimg waybar kitty swaync sway-zsh-completion swaync-zsh-completion ly pipewire pipewire-openrc pipewire-tools pipewire-pulse-openrc pipewire-alsa wireplumber wireplumber-openrc mesa-dri-gallium mesa-va-gallium mesa-vulkan-ati vulkan-headers vulkan-tools@edge libdrm@edge libinput@edge distrobox elogind elogind-openrc dbus dbus-openrc font-noto terminus-font rofi-wayland wlsunset wlsunset-openrc firefox-esr openrc-user@edge libinput-zsh-completion
+doas apk add sway swww swayimg waybar kitty swaync sway-zsh-completion swaync-zsh-completion ly pipewire pipewire-openrc pipewire-tools pipewire-pulse-openrc pipewire-alsa wireplumber wireplumber-openrc mesa-dri-gallium mesa-va-gallium mesa-vulkan-ati vulkan-headers vulkan-tools@edge libdrm@edge libinput@edge distrobox elogind elogind-openrc dbus dbus-openrc font-noto terminus-font rofi-wayland wlsunset wlsunset-openrc firefox-esr openrc-user@edge libinput-zsh-completion
 
 echo "###############################################################"
 echo "activation de elogind et dbus"
-rc-update add dbus default
-rc-update add elogind default
-service dbus start
-service elogind start
+doas rc-update add dbus default
+doas rc-update add elogind default
+doas service dbus start
+doas service elogind start
 
 
 echo "###############################################################"
 echo " creation du conteneur JV"
-doas -u "${USER}" distrobox-create --name "${CONTAINER_NAME}" --image "${CONTAINER_IMAGE}" --persistent-home --pkgmanager pacman --as-root
-doas -u "${USER}" distrobox-enter ${CONTAINER_NAME} -- sh -c "set -eu pacman -S --noconfirm \
+distrobox-create --name "${CONTAINER_NAME}" --image "${CONTAINER_IMAGE}" --persistent-home --pkgmanager pacman --as-root
+distrobox-enter ${CONTAINER_NAME} -- sh -c "set -eu pacman -S --noconfirm \
         steam lutris \
         wine winetricks \
         lib32-vulkan-radeon vulkan-radeon \
@@ -64,10 +64,9 @@ echo "###############################################################"
 echo "  Création des scripts utiles"
 
 # Création du répertoire Wallpapers
-doas -u "${USER}" mkdir -p "/home/${USER}/Images/Wallpapers"
+mkdir -p "/home/${USER}/Images/Wallpapers"
 
 # Script pour démarrer Steam
-doas -u "${USER}" sh -c "
 cat > /home/${USER}/start-gaming <<'GAMINGEOF'
 #!/bin/sh
 # Script pour démarrer Steam dans distrobox
@@ -76,10 +75,9 @@ echo \" Démarrage de Steam ...\"
 distrobox-enter arch-JV -- steam
 GAMINGEOF
 chmod +x /home/${USER}/start-gaming
-"
+
 
 # Script d'entrée dans le conteneur
-doas -u "${USER}" sh -c "
 cat > /home/${USER}/gaming-shell <<'SHELLEOF'
 #!/bin/sh
 # Script pour ouvrir un shell dans le conteneur gaming
@@ -88,10 +86,9 @@ echo \" ouverture de la distrobox arch-JV...\"
 distrobox-enter arch-JV
 SHELLEOF
 chmod +x /home/${USER}/gaming-shell
-"
+
 
 # Script pour sélectionner des wallpapers avec rofi
-doas -u "${USER}" sh -c "
 cat > /home/${USER}/wallpaper-picker <<'WALLPAPEREOF'
 #!/bin/sh
 # Script pour sélectionner et appliquer un wallpaper avec rofi + swww
@@ -130,44 +127,41 @@ else
 fi
 WALLPAPEREOF
 chmod +x /home/${USER}/wallpaper-picker
-"
+
 
 ##### FINALISATION #####
 echo "###############################################################"
 echo " Création du répertoire de configuration"
-doas -u "${USER}" sh -c "
-    mkdir -p ~/.config/sway
-    mkdir -p ~/.config/waybar
-    mkdir -p ~/.config/pipewire
-"
+mkdir -p ~/.config/sway
+mkdir -p ~/.config/waybar
+mkdir -p ~/.config/pipewire
+
 
 #### CONFIGURATION UTILISATEUR #####
 echo "###############################################################"
 echo " Configuration de l'utilisateur ${USER}"
-addgroup "${USER}" input 2>/dev/null || true
-addgroup "${USER}" video 2>/dev/null || true
-addgroup "${USER}" audio 2>/dev/null || true
+doas addgroup "${USER}" input 2>/dev/null || true
+doas addgroup "${USER}" video 2>/dev/null || true
+doas addgroup "${USER}" audio 2>/dev/null || true
 
 ##### ACTIVATION DES SERVICES UTILISATEUR #####
 echo "###############################################################"
 echo "🔧 Activation des services utilisateur OpenRC"
 
 # Activation du service utilisateur pour l'utilisateur
-doas -u "${USER}" sh -c "
-    # Activation du service utilisateur OpenRC
-    rc-update -U add pipewire default
-    rc-update -U add pipewire-pulse default
-    rc-update -U add wireplumber default
+# Activation du service utilisateur OpenRC
+rc-update -U add pipewire default
+rc-update -U add pipewire-pulse default
+rc-update -U add wireplumber default
 ECHO "activation de pipewire" 
 rc-update -U add pipewire
 rc-service -U pipewire start
     
-    # Création des répertoires de configuration
-    mkdir -p ~/.config/sway
-    mkdir -p ~/.config/waybar
-    mkdir -p ~/.config/pipewire
-    mkdir -p ~/.local/share/wallpapers
-"
+# Création des répertoires de configuration
+mkdir -p ~/.config/sway
+mkdir -p ~/.config/waybar
+mkdir -p ~/.config/pipewire
+mkdir -p ~/.local/share/wallpapers
 
 cat <<EOF
 ═══════════════════════════════════════════════════════════════
