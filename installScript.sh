@@ -37,7 +37,7 @@ apk update && apk upgrade --available
 ##### ESSENTIAL PACKAGE #####
 echo "###############################################################"
 echo "Installation des packages essentiels"
-apk add sway swww swayimg waybar kitty swaync sway-zsh-completion swaync-zsh-completion swayidle wl-clipboard grim swaylock swaylockd xwayland ly pipewire pipewire-openrc pipewire-tools pipewire-pulse-openrc pipewire-alsa wireplumber wireplumber-openrc mesa-dri-gallium mesa-va-gallium mesa-vulkan-ati vulkan-headers vulkan-tools@edge libdrm@edge libinput@edge distrobox font-noto font-dejavu terminus-font rofi-wayland wlsunset wlsunset-openrc firefox-esr openrc-user@edge libinput-zsh-completion
+apk add sway swww swayimg waybar kitty swaync sway-zsh-completion swaync-zsh-completion swaylock-effects yad xdg-user-dirs brightnessctl mako wf-recorder xdg-utils gvfs gvfs-mtp gvfs-nfs cliphist grim slurp pamixer polkit-gnome network-manager-applet playerctl xdg-desktop-portal-wlr jq findutils mpd ncmpcpp swayidle wl-clipboard grim swaylock swaylockd xwayland ly pipewire pipewire-openrc pipewire-tools pipewire-pulse-openrc pipewire-alsa wireplumber wireplumber-openrc mesa-dri-gallium mesa-va-gallium mesa-vulkan-ati vulkan-headers vulkan-tools@edge libdrm@edge libinput@edge distrobox font-noto font-dejavu ttf-jetbrains-mono-nerd terminus-font rofi-wayland wlsunset wlsunset-openrc firefox-esr openrc-user@edge libinput-zsh-completion
 
 echo "###############################################################"
 echo "activation de elogind et dbus"
