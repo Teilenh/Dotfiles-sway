@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
+#
+# Big Thanks to Senioradmin for this script, it's be a big help to me : https://codeberg.org/senioradmin/alpine-sway 
 set -eu
 
 ##### VARIABLES #####
@@ -37,27 +39,78 @@ apk update && apk upgrade --available
 ##### ESSENTIAL PACKAGE #####
 echo "###############################################################"
 echo "Installation des packages essentiels"
-apk add sway swww swayimg waybar kitty swaync sway-zsh-completion swaync-zsh-completion swaylock-effects yad xdg-user-dirs brightnessctl mako wf-recorder xdg-utils gvfs gvfs-mtp gvfs-nfs cliphist grim slurp pamixer polkit-gnome network-manager-applet playerctl xdg-desktop-portal-wlr jq findutils mpd ncmpcpp swayidle wl-clipboard grim swaylock swaylockd xwayland ly pipewire pipewire-openrc pipewire-tools pipewire-pulse-openrc pipewire-alsa wireplumber wireplumber-openrc mesa-dri-gallium mesa-va-gallium mesa-vulkan-ati vulkan-headers vulkan-tools@edge libdrm@edge libinput@edge distrobox font-noto font-dejavu ttf-jetbrains-mono-nerd terminus-font rofi-wayland wlsunset wlsunset-openrc firefox-esr openrc-user@edge libinput-zsh-completion
+apk add alpine-base zsh binutils busybox-mdev-openrc coreutils dbus dosfstools e2fsprogs eudev evince findutils font-dejavu firefox-esr kitty greetd greetd-agreety grep grim slurp btop iproute2 linux-firmware-other linux-lts linux-pam libinput mc mousepad nano openssh openssl pciutils procps rofi-wayland seatd-launch shadow shadow-login sway swaylock swaylockd swaylock-effects thunar udev-init-scripts udev-init-scripts-openrc usbutils util-linux waybar sway-zsh-completion swaync swaync-zsh-completion yad xdg-user-dirs brightnessctl wf-recorder xdg-utils gvfs gvfs-mtp gvfs-nfs cliphist pamixer polkit-gnome network-manager-applet playerctl xdg-desktop-portal-wlr jq findutils mdp swww swayimg ncmpcpp  swayiddle wl-clipboard xwayland ly pipewire pipewire-pulse pipewire-alsa pwvucontrol wireplumber mesa-dri-gallium mesa-va-gallium mesa-vulkan-ati vulkan-headers vulkan-tools libdrm@edge libinput@edge distrobox font-noto ttf-jetbrains-mono-nerd terminus-font wlsunset openrc-user libinput-zsh-completion
 
 echo "###############################################################"
-echo "activation de elogind et dbus"
-rc-update add dbus default
-rc-update add elogind default
-service dbus start
-service elogind start
+
+# Find user with id 1000
+SUSER=$(id 1000|cut -d'(' -f2|cut -d')' -f1)
+
+if [ -z $SUSER ]; then exit 1; fi
+
+# setup services
+setup-devd udev
+rc-update add seatd
+rc-update add dbus
+adduser ${SUSER} seat
+adduser greetd seat
+
+# config greetd
+cat << EOF > /etc/conf.d/greetd
+# Configuration for /etc/init.d/greetd
+
+# Path to config file to use.
+#cfgfile="/etc/greetd/config.toml"
+
+EOF
+
+
+cat << EOF > /etc/greetd/config.toml
+[terminal]
+# The VT to run the greeter on. Can be "next", "current" or a number
+# designating the VT.
+vt = 7
+
+# The default session, also known as the greeter.
+[default_session]
+
+# agreety is the bundled agetty/login-lookalike. You can replace /bin/sh
+# with whatever you want started, such as sway.
+command = agreety --cmd "dbus-run-session sway"
+
+# The user to run the command as. The privileges this user must have depends
+# on the greeter. A graphical greeter may for example require the user to be
+# in the video group.
+user = "greetd"
+EOF
+
+rc-update add greetd
+
+# Set XDG_RUNTIME_DIR
+
+cat << EOF > /home/${SUSER}/.profile
+if [ -z "$XDG_RUNTIME_DIR" ]; then
+  XDG_RUNTIME_DIR="/tmp/1000-runtime-dir"
+  mkdir -pm 0700 \$XDG_RUNTIME_DIR
+  export XDG_RUNTIME_DIR
+fi
+export TERMINAL=foot
+EOF
+
+chown ${SUSER}: /home/${SUSER}/.profile
 
 
 echo "###############################################################"
 echo " creation du conteneur JV"
 su - "${USER}" -c "distrobox-create --name "${CONTAINER_NAME}" --image "${CONTAINER_IMAGE}" "
-su - "${USER}" -c "distrobox-enter ${CONTAINER_NAME} -- sh -c "pacman -Syu --noconfirm \
-        steam lutris \
-        wine winetricks \
-        lib32-vulkan-radeon vulkan-radeon \
-        lib32-mesa mesa \
-        gamemode lib32-gamemode \
-        mangohud lib32-mangohud umu-launcher
-" "
+#su - "${USER}" -c "distrobox-enter ${CONTAINER_NAME} -- sh -c "pacman -Syu --noconfirm \
+#        steam lutris \
+#        wine winetricks \
+#        lib32-vulkan-radeon vulkan-radeon \
+#        lib32-mesa mesa \
+#        gamemode lib32-gamemode \
+#        mangohud lib32-mangohud umu-launcher
+#" "
 
 ##### SCRIPTS UTILES #####
 echo "###############################################################"
@@ -161,12 +214,6 @@ doas -u "${USER}" sh -c "
 ECHO "activation de pipewire" 
 rc-update -U add pipewire
 rc-service -U pipewire start
-    
-    # Création des répertoires de configuration
-    mkdir -p ~/.config/sway
-    mkdir -p ~/.config/waybar
-    mkdir -p ~/.config/pipewire
-    mkdir -p ~/.local/share/wallpapers
 "
 
 cat <<EOF
