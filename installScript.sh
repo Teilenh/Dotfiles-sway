@@ -39,7 +39,7 @@ apk update && apk upgrade --available
 ##### ESSENTIAL PACKAGE #####
 echo "###############################################################"
 echo "Installation des packages essentiels"
-apk add alpine-base zsh binutils busybox-mdev-openrc coreutils dbus dosfstools e2fsprogs eudev evince findutils font-dejavu firefox-esr kitty greetd greetd-agreety grep grim slurp btop iproute2 linux-firmware-other linux-lts linux-pam libinput mc mousepad nano openssh openssl pciutils procps rofi-wayland seatd-launch shadow shadow-login sway swaylock swaylockd swaylock-effects thunar udev-init-scripts udev-init-scripts-openrc usbutils util-linux waybar sway-zsh-completion swaync swaync-zsh-completion yad xdg-user-dirs brightnessctl wf-recorder xdg-utils gvfs gvfs-mtp gvfs-nfs cliphist pamixer polkit-gnome network-manager-applet playerctl xdg-desktop-portal-wlr jq findutils mdp swww swayimg ncmpcpp  swayiddle wl-clipboard xwayland ly pipewire pipewire-pulse pipewire-alsa pwvucontrol wireplumber mesa-dri-gallium mesa-va-gallium mesa-vulkan-ati vulkan-headers vulkan-tools libdrm@edge libinput@edge distrobox font-noto ttf-jetbrains-mono-nerd terminus-font wlsunset openrc-user libinput-zsh-completion
+apk add alpine-base zsh binutils elogind busybox-mdev-openrc coreutils dbus dosfstools e2fsprogs eudev evince findutils font-dejavu firefox-esr kitty greetd greetd-agreety grep grim slurp btop iproute2 linux-firmware-other linux-lts linux-pam libinput mc mousepad nano openssh openssl pciutils procps rofi-wayland shadow shadow-login sway swaylock swaylockd swaylock-effects thunar udev-init-scripts udev-init-scripts-openrc usbutils util-linux waybar sway-zsh-completion swaync swaync-zsh-completion yad xdg-user-dirs brightnessctl wf-recorder xdg-utils gvfs gvfs-mtp gvfs-nfs cliphist pamixer polkit-gnome network-manager-applet playerctl xdg-desktop-portal-wlr jq findutils mdp swww swayimg ncmpcpp  swayiddle wl-clipboard xwayland ly pipewire pipewire-pulse pipewire-alsa pwvucontrol wireplumber mesa-dri-gallium mesa-va-gallium mesa-vulkan-ati vulkan-headers vulkan-tools libdrm@edge libinput@edge distrobox font-noto ttf-jetbrains-mono-nerd terminus-font wlsunset openrc-user libinput-zsh-completion
 
 echo "###############################################################"
 
@@ -50,7 +50,7 @@ if [ -z $SUSER ]; then exit 1; fi
 
 # setup services
 setup-devd udev
-rc-update add seatd
+rc-update add elogind
 rc-update add dbus
 adduser ${SUSER} seat
 adduser greetd seat
@@ -86,16 +86,16 @@ EOF
 
 rc-update add greetd
 
-# Set XDG_RUNTIME_DIR
+####### Set manually XDG_RUNTIME_DIR if neccesary
 
-cat << EOF > /home/${SUSER}/.profile
-if [ -z "$XDG_RUNTIME_DIR" ]; then
-  XDG_RUNTIME_DIR="/tmp/1000-runtime-dir"
-  mkdir -pm 0700 \$XDG_RUNTIME_DIR
-  export XDG_RUNTIME_DIR
-fi
-export TERMINAL=foot
-EOF
+# cat << EOF > /home/${SUSER}/.profile
+# if [ -z "$XDG_RUNTIME_DIR" ]; then
+#   XDG_RUNTIME_DIR="/tmp/1000-runtime-dir"
+#   mkdir -pm 0700 \$XDG_RUNTIME_DIR
+#   export XDG_RUNTIME_DIR
+# fi
+# export TERMINAL=foot
+# EOF
 
 chown ${SUSER}: /home/${SUSER}/.profile
 
