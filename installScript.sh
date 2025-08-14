@@ -198,6 +198,7 @@ doas -u "${USER}" sh -c "
 echo "###############################################################"
 echo " Configuration de l'utilisateur ${USER}"
 addgroup "${USER}" input 2>/dev/null || true
+addgroup "${USER}" seat 2>/dev/null || true
 addgroup "${USER}" video 2>/dev/null || true
 addgroup "${USER}" audio 2>/dev/null || true
 
