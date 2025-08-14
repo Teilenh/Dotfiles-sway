@@ -211,9 +211,9 @@ doas -u "${USER}" sh -c "
     rc-update -U add pipewire default
     rc-update -U add pipewire-pulse default
     rc-update -U add wireplumber default
-ECHO "activation de pipewire" 
-rc-update -U add pipewire
-rc-service -U pipewire start
+    echo "activation de pipewire" 
+    rc-update -U add pipewire
+    rc-service -U pipewire start
 "
 
 cat <<EOF
