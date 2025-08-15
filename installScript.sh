@@ -44,8 +44,6 @@ apk add alpine-base zsh binutils font-dejavu firefox-esr kitty greetd greetd-agr
 echo "###############################################################"
 
 # Find user with id 1000
-SUSER=$(id 1000|cut -d'(' -f2|cut -d')' -f1)
-
 if [ -z $SUSER ]; then exit 1; fi
 
 # setup services
