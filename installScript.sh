@@ -29,7 +29,7 @@ http://alpinelinux.mirrors.ovh.net/v$(cut -d. -f1-2 /etc/alpine-release)/main
 http://alpinelinux.mirrors.ovh.net/v$(cut -d. -f1-2 /etc/alpine-release)/community
 @edge http://mirrors.hostico.ro/alpinelinux/edge/main
 @edge http://mirrors.hostico.ro/alpinelinux/edge/community
-@testing http://mirrors.hostico.ro/alpine/edge/testing
+@testing http://mirrors.hostico.ro/alpinelinux/edge/testing
 EOF
 
 ##### MAJ sys #####
