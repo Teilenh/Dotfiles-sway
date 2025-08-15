@@ -43,9 +43,6 @@ apk add alpine-base zsh binutils font-dejavu firefox-esr elogind kitty greetd gr
 
 echo "###############################################################"
 
-# Find user with id 1000
-if [ -z $USER ]; then exit 1; fi
-
 # setup services
 setup-devd udev
 rc-update add elogind
