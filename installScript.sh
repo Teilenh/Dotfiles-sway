@@ -50,7 +50,7 @@ if [ -z $USER ]; then exit 1; fi
 setup-devd udev
 rc-update add elogind
 rc-update add dbus
-adduser ${SUSER} seat
+adduser ${USER} seat
 adduser greetd seat
 
 # config greetd
@@ -86,7 +86,7 @@ rc-update add greetd
 
 ####### Set manually XDG_RUNTIME_DIR if neccesary
 
-# cat << EOF > /home/${SUSER}/.profile
+# cat << EOF > /home/${USER}/.profile
 # if [ -z "$XDG_RUNTIME_DIR" ]; then
 #   XDG_RUNTIME_DIR="/tmp/1000-runtime-dir"
 #   mkdir -pm 0700 \$XDG_RUNTIME_DIR
@@ -95,7 +95,7 @@ rc-update add greetd
 # export TERMINAL=foot
 # EOF
 
-chown ${SUSER}: /home/${SUSER}/.profile
+chown ${USER}: /home/${USER}/.profile
 
 
 echo "###############################################################"
