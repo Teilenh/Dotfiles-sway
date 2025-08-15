@@ -95,7 +95,7 @@ rc-update add greetd
 # export TERMINAL=foot
 # EOF
 
-chown ${USER}: /home/${USER}/.profile
+# chown ${USER}: /home/${USER}/.profile
 
 
 echo "###############################################################"
