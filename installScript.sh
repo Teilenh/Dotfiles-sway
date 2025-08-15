@@ -1,3 +1,4 @@
+
 #!/usr/bin/env sh
 #
 # Big Thanks to Senioradmin for this script, it's be a big help to me : https://codeberg.org/senioradmin/alpine-sway 
@@ -49,6 +50,10 @@ rc-update add elogind
 rc-update add dbus
 #adduser ${USER} seat
 #adduser greetd seat
+adduser ${USER} video
+adduser ${USER} input
+adduser ${USER} audio
+aduser greetd video
 
 # config greetd
 cat << EOF > /etc/conf.d/greetd
@@ -64,7 +69,7 @@ cat << EOF > /etc/greetd/config.toml
 [terminal]
 # The VT to run the greeter on. Can be "next", "current" or a number
 # designating the VT.
-vt = 1
+vt = 2
 
 # The default session, also known as the greeter.
 [default_session]
@@ -183,34 +188,25 @@ chmod +x /home/${USER}/wallpaper-picker
 ##### FINALISATION #####
 echo "###############################################################"
 echo " Création du répertoire de configuration"
-doas -u "${USER}" sh -c "
-    mkdir -p ~/.config/sway
-    mkdir -p ~/.config/waybar
-    mkdir -p ~/.config/pipewire
-"
 
-#### CONFIGURATION UTILISATEUR #####
-echo "###############################################################"
-echo " Configuration de l'utilisateur ${USER}"
-addgroup "${USER}" input 2>/dev/null || true
-addgroup "${USER}" seat 2>/dev/null || true
-addgroup "${USER}" video 2>/dev/null || true
-addgroup "${USER}" audio 2>/dev/null || true
+mkdir -p ~/.config/sway
+mkdir -p ~/.config/waybar
+mkdir -p ~/.config/pipewire
+
 
 ##### ACTIVATION DES SERVICES UTILISATEUR #####
 echo "###############################################################"
-echo "🔧 Activation des services utilisateur OpenRC"
+echo "Activation des services utilisateur OpenRC"
 
 # Activation du service utilisateur pour l'utilisateur
-doas -u "${USER}" sh -c "
-    # Activation du service utilisateur OpenRC
-    rc-update -U add pipewire default
-    rc-update -U add pipewire-pulse default
-    rc-update -U add wireplumber default
-    echo "activation de pipewire" 
-    rc-update -U add pipewire
-    rc-service -U pipewire start
-"
+# Activation du service utilisateur OpenRC
+rc-update -U add pipewire default
+rc-update -U add pipewire-pulse default
+rc-update -U add wireplumber default
+echo "activation de pipewire" 
+rc-update -U add pipewire
+rc-service -U pipewire start
+
 
 cat <<EOF
 ═══════════════════════════════════════════════════════════════
