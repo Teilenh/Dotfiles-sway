@@ -53,7 +53,7 @@ rc-update add dbus
 adduser ${USER} video
 adduser ${USER} input
 adduser ${USER} audio
-aduser greetd video
+adduser greetd video
 
 # config greetd
 cat << EOF > /etc/conf.d/greetd
