@@ -39,7 +39,7 @@ apk update && apk upgrade --available
 ##### ESSENTIAL PACKAGE #####
 echo "###############################################################"
 echo "Installation des packages essentiels"
-apk add alpine-base zsh binutils font-dejavu firefox-esr elogind kitty greetd greetd-agreety grep grim slurp btop iproute2 linux-firmware-other linux-lts linux-pam libinput mc mousepad nano openssh openssl pciutils procps rofi-wayland shadow shadow-login sway swaylock swaylockd swaylock-effects thunar udev-init-scripts udev-init-scripts-openrc usbutils util-linux waybar sway-zsh-completion swaync swaync-zsh-completion yad xdg-user-dirs brightnessctl wf-recorder xdg-utils gvfs gvfs-mtp gvfs-nfs pamixer polkit-gnome network-manager-applet playerctl xdg-desktop-portal-wlr jq mpd swww swayimg ncmpcpp  swayidle wl-clipboard xwayland ly pipewire pipewire-pulse pipewire-alsa pavucontrol wireplumber mesa-dri-gallium mesa-va-gallium mesa-vulkan-ati vulkan-headers vulkan-tools libdrm@edge libinput@edge distrobox font-noto font-jetbrains-mono-nerd terminus-font wlsunset openrc-user libinput-zsh-completion
+apk add alpine-base zsh binutils font-dejavu firefox-esr elogind kitty greetd greetd-agreety grep grim slurp btop iproute2 linux-firmware-other linux-lts linux-pam mc mousepad nano openssh openssl pciutils procps rofi-wayland sway swaylock swaylockd swaylock-effects thunar udev-init-scripts udev-init-scripts-openrc usbutils util-linux waybar sway-zsh-completion swaync swaync-zsh-completion yad xdg-user-dirs brightnessctl wf-recorder xdg-utils gvfs gvfs-mtp gvfs-nfs pamixer polkit-gnome network-manager-applet playerctl xdg-desktop-portal-wlr jq mpd swww swayimg ncmpcpp  swayidle wl-clipboard xwayland ly pipewire pipewire-pulse pipewire-alsa pavucontrol wireplumber mesa-dri-gallium mesa-va-gallium mesa-vulkan-ati vulkan-headers vulkan-tools libdrm@edge libinput@edge distrobox font-noto font-jetbrains-mono-nerd terminus-font wlsunset openrc-user libinput-zsh-completion
 
 echo "###############################################################"
 
@@ -50,8 +50,8 @@ if [ -z $USER ]; then exit 1; fi
 setup-devd udev
 rc-update add elogind
 rc-update add dbus
-adduser ${USER} seat
-adduser greetd seat
+#adduser ${USER} seat
+#adduser greetd seat
 
 # config greetd
 cat << EOF > /etc/conf.d/greetd
@@ -67,7 +67,7 @@ cat << EOF > /etc/greetd/config.toml
 [terminal]
 # The VT to run the greeter on. Can be "next", "current" or a number
 # designating the VT.
-vt = 7
+vt = 1
 
 # The default session, also known as the greeter.
 [default_session]
