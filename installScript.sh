@@ -90,7 +90,7 @@ rc-update add greetd
 
 # cat << EOF > /home/${USER}/.profile
 # if [ -z "$XDG_RUNTIME_DIR" ]; then
-#   XDG_RUNTIME_DIR="/tmp/1000-runtime-dir"
+#   XDG_RUNTIME_DIR="/run/user/$(id -u)"
 #   mkdir -pm 0700 \$XDG_RUNTIME_DIR
 #   export XDG_RUNTIME_DIR
 # fi
