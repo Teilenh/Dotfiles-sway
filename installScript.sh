@@ -257,5 +257,9 @@ PROCHAINES ÉTAPES :
    • Terminal : Kitty
    • Lanceur : rofi-wayland
 
-═══════════════════════════════════════════════════════════════
+═══════════════════════════════════════════════════════════════teilen
 EOF
+
+
+echo "Redémarrage dans 10 secondes . . . "
+sleep 10 && doas reboot
