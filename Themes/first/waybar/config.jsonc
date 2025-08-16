@@ -1,0 +1,135 @@
+{
+    "include": [
+	  "$HOME/.config/waybar/Modules"
+    ],
+    "layer": "top",
+    "height": 42,
+    "reload_style_on_change": true,
+    "modules-left": [
+	"custom/power",
+        "hyprland/workspaces",
+        "mpris"
+    ],
+    "modules-center": [
+	"custom/swaync",
+        "clock",
+        "privacy"
+    ],
+    "modules-right": [
+        "tray",
+	"wireplumber",
+	"pulseaudio#microphone",
+        "cpu",
+        "memory",
+	"temperature",
+    ],
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "on-scroll-up": "hyprctl dispatch workspace e-1",
+        "on-scroll-down": "hyprctl dispatch workspace e+1",
+	"persistent-workspaces": {
+		"*": 3
+	},
+        "format-icons": {
+		"empty": "",
+                "active": "",
+                "default": "",
+        },
+    },
+    "mpris": {
+        "format": "{player_icon}  {title} - {artist}",
+        "format-paused": "{status_icon}  {title} - {artist}",
+        "max-length": 39,
+        "dynamic-len": 10,
+        "on-scroll-up": "playerctl volume 0.05+",
+        "on-scroll-down": "playerctl volume 0.05-",
+	"on-right-click": "playerctl next",
+        "player-icons": {
+            "default": "󰎈",
+            "mpv": "",
+            "vlc": "<span color='#E85E00'>󰕼</span>",
+            "spotify": "<span color='#1DB954'></span>",
+	    "firefox": "<span font='normal Font Awesome 6 Free' color='#ed7009'>🎧</span>"
+
+      },
+        "status-icons": {
+            "paused": "⏸",
+            "playing": "",
+            "stopped": ""
+         },
+    },
+    "custom/cava": {
+	"exec": "$HOME/.config/hypr/scripts/audioBar.sh",
+	"format": "{}"
+    },
+    "privacy": {
+        "icon-spacing": 4,
+        "icon-size": 12,
+        "transition-duration": 250,
+	"on-click": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+	"on-click-right": "pactl set-source-mute @DEFAULT_SOURCE@ toggle",
+        "modules": [
+            {
+                "type": "screenshare",
+                "tooltip": true,
+                "tooltip-icon-size": 12
+            },
+            {
+                "type": "audio-in",
+                "tooltip": true,
+                "tooltip-icon-size": 12
+            }
+        ]
+    },
+    "clock": {
+        "interval": 1,
+        "format": " {:%d %b ~ %H:%M}  ",
+        "tooltip": true,
+	"tooltip-format": "<span font='FiraCode 10' foreground='#FFD4E4'>{calendar}</span>",
+	"on-click": "yad --calendar --undecorated --no-buttons --skip-taskbar"
+    },
+    "tray": {
+        "icon-size": 20,
+        "spacing": 13
+    },
+    "cpu": {
+        "interval": 30,
+        "format": " {load}%",
+        "max-length": 10,
+	"on-click": "btop"
+    },
+    "memory": {
+        "interval": 10,
+        "format": "{used:0.1f}G ",
+        "format-alt": "{percentage}% ",
+        "format-alt-click": "click",
+        "tooltip": true,
+        "tooltip-format": "{used:0.1f}GB/{total:0.1f}G",
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}% {format_source}",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "󰖁 0% {format_source}",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "󰂑",
+            "headset": "󰂑",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": [
+                "",
+                ""
+            ]
+        },
+	"on-click": "pwvucontrol",
+        "scroll-step": 5,
+        "ignored-sinks": [
+            "Easy Effects Sink"
+        ],
+        "format-source": " {volume}%",
+        "format-source-muted": " {volume}%"
+    }
+}
