@@ -1,0 +1,272 @@
+// -------------------------------------
+// Waybar configuration - Teilen
+// -------------------------------------
+{
+  // -------------------------------------
+  // BAR SETTINGS
+  "layer": "top",
+  "height": 37,
+  "spacing": 0,
+  "margin-top": "$bar_margin",
+  "margin-left": 5,
+  "margin-right": 10,
+  "width": "calc(100% - 20px)",
+  "exclusive": true,
+  "passthrough": false,
+
+  // -------------------------------------
+  // MODULE ORDER
+  "modules-left": [
+    "custom/launcher",
+    "niri/workspaces",
+    "niri/window#text",
+    "niri/window",
+    "custom/mediatext",
+    "custom/media",
+  ],
+  "modules-center": ["custom/clocktext", "clock"],
+  "modules-right": [
+    "custom/weathertext",
+    "custom/weather",
+    "pulseaudio#text",
+    "group/group-audio",
+    "tray",
+    "network#text",
+    "network",
+    "custom/memorytext",
+    //"memory",
+    "group/group-hardware",
+    "group/group-power",
+  ],
+
+  // -------------------------------------
+  // MODULES CONFIG
+  "custom/launcher": {
+    "format": "<span size='10000'><b></b></span>",
+    "tooltip": false,
+    "on-click": "~/.config/rofi/sidelauncher.sh",
+  },
+  "tray": {
+    "icon-size": 14,
+    "spacing": 8,
+  },
+  "niri/workspaces": {
+    "all-outputs": true,
+    "format": "{icon}",
+    "format-icons": {
+      "1": "<span size='11000'><b></b></span>",
+      "2": "<span size='11000'><b></b></span>",
+      "3": "<span size='11000'><b></b></span>",
+      "4": "<span size='11000'><b></b></span>",
+      "5": "",
+      "6": "",
+      "urgent": "<span size='11000'><b></b></span>",
+      "default": "<span size='11000'><b></b></span>",
+    },
+    "on-click": "activate",
+    "sort-by-number": true,
+  },
+
+  "niri/window": {
+    "format": "{title}",
+    "icon": false,
+    "rewrite": {
+      "(.*) - Mozilla Firefox": " Firefox",
+      "(.*) - zsh": "> [$1]",
+    },
+  },
+
+  "niri/window#text": {
+    "format": "",
+    "icon": true,
+    "icon-size": 14,
+  },
+
+  "custom/clocktext": {
+    "format": "<span size='10000'><b>󰥔</b></span>",
+  },
+
+  "clock": {
+    "format": "{:%H:%M}",
+    "format-alt": "{:%A, %B %d, %Y (%R)}",
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "weeks-pos": "right",
+      "on-scroll": 1,
+      "format": {
+        "months": "<span color='#ffead3'><b>{}</b></span>",
+        "days": "<span color='#ecc6d9'><b>{}</b></span>",
+        "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+        "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>",
+      },
+    },
+    "actions": {
+      "on-click-right": "mode",
+      "on-scroll-up": "shift_up",
+      "on-scroll-down": "shift_down",
+    },
+  },
+
+  // --------------------------------------------
+  // GROUP HARDWARE
+  "group/group-hardware": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 200,
+      "children-class": "not-hardware",
+      "click-to-reveal": true,
+      "transition-left-to-right": true,
+    },
+    "modules": ["memory", "cpu", "temperature"],
+  },
+  "custom/memorytext": {
+    "format": "<span size='10000'><b></b></span>",
+    "icon-size": 14,
+  },
+  "temperature": {
+    // "thermal-zone": 2,
+    "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+    "critical-threshold": 85,
+    "format-critical": "{temperatureC}°C <span size='10000'><b></b></span>",
+    "format": "{temperatureC}°C <span size='10000'><b></b></span>",
+  },
+  "memory": {
+    "interval": 30,
+    "format": "{used:0.1f}G/{total:0.1f}G",
+  },
+  // ----------------------------------------------------------
+  "network#text": {
+    "format": "{icon}",
+    "format-icons": {
+      "ethernet": "<span size='10000'><b>󰈀</b></span>",
+      "wifi": "<span size='10000'><b></b></span>",
+      "disconnected": "<span size='10000'><b>󰖪</b></span>",
+    },
+    "icon-size": 14,
+    "tooltip-format": "{ifname} via {gwaddr} 󰊗",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+    "tooltip-format-ethernet": "{ifname} ",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 50,
+  },
+
+  "network": {
+    "interface": "enp15s0",
+    "tooltip": true,
+    "format": "{ifname}",
+    "format-wifi": "{essid} ({signalStrength}%) <span size='11000'><b></b></span>",
+    "format-ethernet": "{bandwidthUpOctets}",
+    "format-disconnected": "", //An empty format will hide the module.
+    "tooltip-format": "{ifname} via {gwaddr} <span size='11000'><b>󰊗</b></span>",
+    "tooltip-format-wifi": "{essid} ({signalStrength}%) <span size='11000'><b></b></span>",
+    "tooltip-format-ethernet": "{ifname} <span size='11000'><b>\n</b></span> {bandwidthUpOctets}\n<span size='11000'><b></b></span> {bandwidthDownOctets}",
+    "tooltip-format-disconnected": "Disconnected",
+    "max-length": 50,
+    "on-click": "nm-connection-editor", // clic gauche → éditeur NM
+    "on-click-right": "nmtui", // clic droit → terminal + nmtui
+  },
+
+  "pulseaudio#text": {
+    "format": "{icon} ",
+    "format-icons": {
+      "headphone": "<span size='12000'><b></b></span>",
+      "hands-free": "<span size='12000'><b></b></span>",
+      "headset": "<span size='12000'><b></b></span>",
+      "default": [
+        "<span size='13000'><b></b></span>",
+        "<span size='13000'><b></b></span>",
+        "<span size='13000'><b></b></span>",
+      ],
+    },
+  },
+  "group/group-audio": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 200,
+      "children-class": "not-audio",
+    },
+    "modules": ["pulseaudio", "pulseaudio#source"],
+  },
+  "pulseaudio": {
+    "on-click": "pwvucontrol",
+    "format": "{volume}% ",
+    "format-muted": " ",
+    "on-click-right": "pamixer -t", // mute sortie
+    "on-scroll-up": "pamixer -i 5", // volume up sortie
+    "on-scroll-down": "pamixer -d 5", // volume down sortie
+  },
+  "pulseaudio#source": {
+    "format": "{format_source}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "",
+    "on-click": "pwvucontrol",
+    "on-click-right": "pamixer --source alsa_input.usb-0c76_USB_PnP_Audio_Device-00.mono-fallback -t", // mute entrée
+    "on-scroll-up": "pamixer --source alsa_input.usb-0c76_USB_PnP_Audio_Device-00.mono-fallback -i 5", // volume up entrée
+    "on-scroll-down": "pamixer --source alsa_input.usb-0c76_USB_PnP_Audio_Device-00.mono-fallback -d 5", // volume down entrée
+  },
+  "custom/mediatext": {
+    "format": "<span size='11000'><b></b></span>",
+  },
+
+  "custom/media": {
+    "format": "{icon} {}",
+    "escape": true,
+    "return-type": "json",
+    "max-length": 60,
+    "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl stop",
+    "smooth-scrolling-threshold": 2,
+    "on-scroll-up": "playerctl next",
+    "on-scroll-down": "playerctl previous",
+    "exec": "$HOME/.config/waybar/modules/mediaplayer.py &",
+  },
+
+  "custom/weathertext": {
+    "format": "<span size='11000'><b></b></span>",
+  },
+
+  "custom/weather": {
+    "exec": "${HOME}/.config/waybar/modules/weather.sh Namur+Belgium",
+    "return-type": "json",
+    "format": "{}",
+    "tooltip": true,
+    "interval": 3600,
+  },
+  "group/group-power": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 200,
+      "children-class": "not-power",
+      "transition-left-to-right": false,
+    },
+    "modules": [
+      "custom/shutdown", // First element is the "group leader" and won't ever be hidden
+      "custom/logout",
+      "custom/lock",
+      "custom/reboot",
+    ],
+  },
+  "custom/logout": {
+    "format": " <span size='10000'><b> 󰗼 </b></span> ",
+    "tooltip": false,
+    "on-click": "hyprctl dispatch exit",
+  },
+  "custom/lock": {
+    "format": " <span size='10000'><b> 󰍁 </b></span>",
+    "tooltip": false,
+    "on-click": "loginctl lock-session && pidof hyprlock || hyprlock",
+  },
+  "custom/reboot": {
+    "format": " <span size='10000'><b> 󰜉 </b></span> ",
+    "tooltip": false,
+    "on-click": "reboot",
+  },
+  "custom/shutdown": {
+    "format": "<span size='12000'><b></b></span>",
+    "tooltip": false,
+    "on-click": "shutdown now",
+  },
+}
