@@ -1,0 +1,160 @@
+/* Base settings */
+* {
+    font-family: "JetBrainsMono Nerd Font", "FiraCode Nerd Font";
+    font-weight: bold;
+    font-size: 15px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    transition: background-color 0.3s ease-in-out;
+}
+
+tooltip {
+    font-family: inherit;
+    background: #1C020A;
+    border: 2px solid #FFADC5;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Module Styling */
+#workspaces button,
+#wireplumber,
+#mpris,
+#privacy-item,
+#bluetooth,
+#clock,
+#tray,
+#cpu,
+#power-profiles-daemon,
+#memory,
+#pulseaudio,
+#hyprland-window,
+#custom-updates,
+#custom-swaync,
+#hyprland-workspaces,
+#temperature,
+#network {
+    background: #3D0011;
+    margin: 10px 4px 4px 4px;
+    padding: 4px 10px;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.185);
+    border-radius: 8px;
+    color: #FFD4E4;
+}
+
+#custom-cava:hover,
+#network:hover,
+#temperature:hover,
+#hyprland-window:hover,
+#workspaces button:hover,
+#mpris:hover,
+#privacy-item:hover,
+#bluetooth:hover,
+#clock:hover,
+#tray:hover,
+#cpu:hover,
+#power-profiles-daemon:hover,
+#memory:hover,
+#pulseaudio:hover,
+#gamemode:hover,
+#custom-updates:hover,
+#wireplumber:hover {
+    background-color: #470215;
+    color: #FED4E3;
+}
+
+#clock {
+    padding-right: 5px;
+}
+
+#privacy-item {
+    background: #E03F57;
+    color: #3D0011;
+}
+
+#workspaces {
+    padding: 1px 3px;
+}
+
+#workspaces button {
+    padding: 0px 8px;
+    margin-left: 3px;
+    border: 1px solid transparent;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
+    font-size: 15px;
+    color: #FFD4E4;
+}
+
+#workspaces button.empty {
+    padding: 0px 10px;
+}
+
+#workspaces button:first-child {
+    margin-left: 5px;
+}
+
+#workspaces button.active {
+    background: #CF2D5B;
+    color: #FFF5B5;
+}
+
+#workspaces button:hover {
+    background: #FFF5B5;
+    color: #4A081D;
+}
+#custom-power {
+	background-color: #470215;
+	padding: 4px 0px 0px 0px;
+	margin: 13px 0px 13px 3px;
+	border-radius: 15px;
+}
+#power-profiles-daemon {
+    color: #c4cdf2;
+}
+
+@keyframes blink {
+    to {
+        background-color: #e64553;
+    }
+}
+
+/* Animations for interactivity */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(255, 173, 197, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(255, 173, 197, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(255, 173, 197, 0);
+    }
+}
+
+#custom-updates.alerting {
+    animation: pulse 1.5s infinite;
+    background-color: #FFADC5;
+    color: #3D0011;
+} 
+
+#bluetooth.connected {
+    background-color: #A8E1C1;
+    color: #1C020A;
+} 
+
+#pulseaudio.muted {
+    background-color: #5B6468;
+    color: #999;
+    text-decoration: line-through;
+}
+#custom-cava {
+    color:#1C020A;
+    border-left: 0px;
+    border-right: 0px;
+    padding-bottom: 6px;
+    font-family: "FiraCode nerd font", monospace;
+    font-size: 22px;
+}
