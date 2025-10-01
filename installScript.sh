@@ -220,7 +220,6 @@ PROCHAINES ÉTAPES :
   SERVICES ACTIVÉS :
    • Services système : dbus, elogind
    • Services utilisateur OpenRC : pipewire, pipewire-pulse, wireplumber
-   • Conteneur gaming avec Steam, Lutris, Wine
 
  INTERFACE :
    • Compositeur : Sway (Wayland)
