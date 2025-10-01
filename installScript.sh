@@ -92,7 +92,21 @@ EOF
 rc-update add greetd
 echo "[OK] Services système configurés"
 echo
-####### Set manually XDG_RUNTIME_DIR if neccesary
+
+####### PAM conf for XDG runtime dir 
+# --- PAM elogind pour XDG_RUNTIME_DIR ---
+#PAM_FILE="/etc/pam.d/elogind-user"
+#if [ ! -f "$PAM_FILE" ]; then
+#    echo "Création de $PAM_FILE avec pam_elogind.so"
+#    cat <<EOF > "$PAM_FILE"
+## PAM session pour elogind
+#session optional pam_elogind.so
+#EOF
+#else
+#    grep -q "pam_elogind.so" "$PAM_FILE" || \
+#        echo "session optional pam_elogind.so" >> "$PAM_FILE"
+#fi
+####### or Set manually XDG_RUNTIME_DIR if neccesary
 
 # cat << EOF > /home/${USER}/.profile
 # if [ -z "$XDG_RUNTIME_DIR" ]; then
