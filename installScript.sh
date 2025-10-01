@@ -74,7 +74,6 @@ rc-update -U add pipewire default
 rc-update -U add pipewire-pulse default
 rc-update -U add wireplumber default
 echo "activation de pipewire" 
-rc-update -U add pipewire
 rc-service -U pipewire start
 # config greetd
 cat > /etc/conf.d/greetd <<EOF
@@ -216,7 +215,6 @@ PROCHAINES ÉTAPES :
   CONFIGURATION :
    • Sway : ~/.config/sway/config
    • Waybar : ~/.config/waybar/
-   • Conteneur gaming : arch-JV (Arch Linux)
    • Wallpapers : ~/.local/share/wallpapers/
 
   SERVICES ACTIVÉS :
@@ -236,5 +234,5 @@ PROCHAINES ÉTAPES :
 EOF
 
 
-echo "Redémarrage dans 35 secondes . . . "
+echo "[INFO]Redémarrage dans 35 secondes . . . "
 sleep 35 && doas reboot
