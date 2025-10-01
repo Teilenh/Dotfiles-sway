@@ -1,102 +1,134 @@
 {
-"$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-"logo": {
-  "source": "~/.config/fastfetch/ditto.png",
-  "type": "kitty-direct",
-  "height": 13,
-  "width": 32,
-  "padding": {
-    "top": 1
-    }
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "source": "Alpine",
+    "height": 18
   },
+  "display": {
+    "separator": "  "
+  },
+  "modules": [
+    
+    {
+      "type": "title",
+      "key": "  ",
+      "format": "{6} {7} {8}"
+    },
+    {
+      "type": "custom",
+      "format": "┌──────────────────────────────────────────┐"
+    },
+    {
+      "type": "os",
+      "key": "| 󰣇 Distribution",
+      "format": "{4}",
+      "keyColor": "blue"
+    },
+    {
+      "type": "kernel",
+      "key": "|  Kernel",
+      "format": "{2}",
+      "keyColor": "blue"
+    },
+    {
+      "type": "kernel",
+      "key": "|  Architecture",
+      "format": "{4}",
+      "keyColor": "cyan"
+    },
+    {
+      "type": "packages",
+      "key": "| 󰏗 Packages",
+      "keyColor": "cyan"
+    },
+    {
+      "type": "display",
+      "key": "| 󰍹 Display",
+      "format": "{1}x{2} @ {3}Hz",
+      "keyColor": "cyan"
+    },
+    {
+      "type": "terminal",
+      "key": "|  Terminal",
+      "keyColor": "blue"
+    },
+    {
+      "type": "wm",
+      "key": "| 󱗃 Window Manager",
+      "format": "{1}",
+      "keyColor": "blue"
+    },
+    {
+      "type": "custom",
+      "format": "└──────────────────────────────────────────┘"
+    },
+    {
+    "type": "custom",
+    "format": "\u001b[90m  \u001b[31m  \u001b[32m  \u001b[33m  \u001b[34m  \u001b[35m  \u001b[36m    \u001b[36m  \u001b[35m  \u001b[34m  \u001b[33m  \u001b[32m  \u001b[31m  \u001b[90m "
+    },
+    {
+      "type": "custom",
+      "format": "┌──────────────────────────────────────────┐"
+    },
+    {
+      "type": "cpu",
+      "format": "{1} ~ {7}",
+      "key": "|  CPU",
+      "keyColor": "blue"
+    },
+    {
+      "type": "gpu",
+      "format": "{2}",
+      "key": "| 󰊴 GPU",
+      "keyColor": "blue"
+    },
+    {
+      "type": "gpu",
+      "format": "{3}",
+      "key": "|  GPU Driver",
+      "keyColor": "blue"
+    },
+    {
+      "type": "memory",
+      "key": "|  Memory ",
+      "keyColor": "green"
+    },
+    {
+      "type": "disk",
+      "key": "| 󱦟 OS Age ",
+      "folders": "/",
+      "keyColor": "green",
+      "format": "{days} days"
+    },
+    {
+      "type": "uptime",
+      "key": "| 󱫐 Uptime ",
+      "keyColor": "green"
+    },
 
-"display": {
-"separator": " 󰑃  "
-},
-"modules": [
-    "break",
     {
-    "type": "os",
-    "key": " DISTRO",
-    "keyColor": "red"
-    },
-    {
-    "type": "kernel",
-    "key": "    ├ ",
-    "keyColor": "red"
-    },
-    {
-    "type": "packages",
-    "key": "    ├ 󰏖",
-    "keyColor": "red"
-    },
-    {
-    "type": "shell",
-    "key": "    ├ ",
-    "keyColor": "red"
-    },
-    {
-    "type": "terminal",
-    "key": "    └ ",
-    "keyColor": "red"
-    },
-    {
-    "type": "wm",
-    "key": " DE/WM",
-    "keyColor": "cyan"
-    },
-    {
-    "type": "wmtheme",
-    "key": "    ├ 󰉼",
-    "keyColor": "cyan"
-    },
-    {
-    "type": "icons",
-    "key": "    ├ 󰀻",
-    "keyColor": "cyan"
-    },
-    {
-    "type": "terminalfont",
-    "key": "    ├ ",
-    "keyColor": "cyan",
-    },
-    {
-    "type": "host",
-    "key": "󰌢 SYSTEM",
-    "keyColor": "yellow"
-    },
-    {
-    "type": "cpu",
-    "key": "    ├ 󰻠",
-    "keyColor": "yellow"
-    },
-    //{
-    //"type": "gpu",
-    //"key": "    ├ 󰻑",
-    //"format": "{2}",
-    //"keyColor": "yellow"
-    //},
-    //{
-    //"type": "display",
-    //"key": "    ├ 󰍹",
-    //"keyColor": "yellow",
-    //"compactType": "original-with-refresh-rate"
-    //},
-    {
-    "type": "memory",
-    "key": "    ├ 󰾆",
-    "keyColor": "yellow"
-    },
-    {
-    "type": "uptime",
-    "key": "    └ 󰅐",
-    "keyColor": "yellow"
+      "type": "command",
+      "shell": "/bin/bash",
+      "key": "| 󰘤 ",
+      "text": "~/.config/fastfetch/GLFfetch/scripts/challenge.sh",
+      "keyColor": "blue"
     },
 
-  //  {
-  //  "type": "custom",
-  //  "format": "\u001b[90m  \u001b[31m  \u001b[32m  \u001b[33m  \u001b[34m  \u001b[35m  \u001b[36m  \u001b[37m  \u001b[38m  \u001b[39m  \u0>
-  //  },
-    "break",
-    ]
+    {
+      "type": "command",
+      "shell": "/bin/bash",
+      "key": "| 󰔵 ",
+      "text": "~/.config/fastfetch/GLFfetch/scripts/completion.sh",
+      "keyColor": "blue"
+    },
+    {
+      "type": "custom",
+      "format": "└──────────────────────────────────────────┘"
+    },
+    {
+    "type": "custom",
+    "format": "\u001b[90m  \u001b[31m  \u001b[32m  \u001b[33m  \u001b[34m  \u001b[35m  \u001b[36m    \u001b[36m  \u001b[35m  \u001b[34m  \u001b[33m  \u001b[32m  \u001b[31m  \u001b[90m "
+    },
+    "break"
+  ]
 }
