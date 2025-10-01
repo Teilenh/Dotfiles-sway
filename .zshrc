@@ -3,8 +3,8 @@ export $(dbus-launch)
 zstyle :compinstall filename '/home/teilen/.zshrc'
 
 export PATH="$HOME/bin:$PATH"
-export VISUAL=nano
-export EDITOR=nano
+export VISUAL=nvim
+export EDITOR=nvim
 # Thème et couleurs
 autoload -U colors && colors
 export ZSH_COLOR="on"
@@ -31,8 +31,10 @@ alias ls='ls -lah --color=auto'
 alias grep='grep --color=auto'
 alias ..='cd ..'
 alias ...='cd ../../'
+alias Launch="dbus-run-session sway"
 
-# Prompt personnalisé
+# Prompt personnalisé et cmd start
+fastfetch -c ~/.config/fastfetch/config3.jsonc
 PROMPT='%F{magenta}%n %F{yellow}• [%F{white}%~%f%F{yellow}]%f %F{cyan}➜ %f'  # Utilisateur • [répertoire] ➜
 
 # Activer les options d'autocomplétion
@@ -55,4 +57,3 @@ alias Musique="mpv ~/Musique/*"
 export SWAYSOCK=$(find /run/user/$(id -u) -name 'wayland-0')
 # variables d'environnement pour OpenRC
 export PATH=$PATH:/etc/init.d
-
