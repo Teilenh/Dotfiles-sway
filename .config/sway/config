@@ -5,34 +5,40 @@ set $mod Mod4
 set $term kitty
 set $browser firefox
 set $AppMenu rofi -show drun
-set $fileExplorer thunar
+set $fileExplorer nemo
+set $music ~/.config/sway/scripts/rofi_music
+set $colorpicker ~/.config/sway/scripts/colorpicker
+
+include /etc/sway/config-vars.d/*
+include catppuccin-mocha
+seat seat0 xcursor_theme catppuccin-mocha-dark-cursors 24
 
 ###################
 ### SETUP COLOR ###
 ###################
 # noir
-set $black1 #7E7E7E
+set $black1 #2E3440
 set $black2 #D3D3D3
 # rouge
-set $red1 #FF6F6F
-set $red2 #FFB3B3
+set $red1 #BF616A
+set $red2 #D08770
 # Vert
-set $green1 #6FFF6F
-set $green2 #B3FFB3
+set $green1 #A3BE8C
+set $green2 #A3BE8C
 # jaune
-set $yellow1 #FFFF66
+set $yellow1 #EBCB8B
 set $yellow2 #FFFFb3
 # bleu
-set $blue1 #4D9FFF
-set $blue2 #A3C1DA
+set $blue1 #5E81AC
+set $blue2 #444D60
 # magenta
-set $magenta1 #FFA8A9
-set $magenta2 #FEA8A9
+set $magenta1 #694651
+set $magenta2 #694652
 # Cyan
-set $cyan1 #66FFFF
+set $cyan1 #8FBCBB
 set $cyan2 #B3FFFF
 # blanc
-set $white #AFFFFA
+set $white #ECEAE7
 set $white2 #E5E5E5
 
 #############
@@ -59,7 +65,7 @@ input * {
 ###########
 ### BAR ###
 ###########
-exec /home/teilen/.config/sway/LaunchBar.sh
+exec waybar
 
 # bar {
 #   position top
@@ -83,12 +89,12 @@ exec /home/teilen/.config/sway/LaunchBar.sh
 ##################
 # border
 default_border pixel 2
-client.focused $blue2 $blue2 $white2 $blue1
+client.focused $cyan1 $blue2 $white2 $blue1
 client.focused_inactive $cyan1 $cyan1 $black2 $cyan2
 client.unfocused $white2 $black1 $black2 $white2
 
 # gaps
-gaps inner 5
+gaps inner 4
 gaps outer 2
 
 ##################
@@ -96,15 +102,60 @@ gaps outer 2
 ##################
 
 workspace 1 output DP-1
-workspace 2 output HDMI-A-1
-workspace 3 output DP-1
-workspace 4 
-workspace 5
+# workspace 2 output HDMI-A-1
 
 #################
 ### Wallpaper ###
 #################
-exec swaybg -i Téléchargement/leafy-moon.png -m fill
+exec swaybg -i ~/Downloads/joat5o3lwjea1.png -m fill
+
+############
+### exec ###
+############
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type images --watch cliphist store
+exec dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway &
+exec /usr/libexec/xdg-desktop-portal-wlr &
+exec /usr/libexec/xdg-desktop-portal-gnome &
+exec /usr/libexec/xdg-desktop-portal-gtk &
+
+
+# exec pipewire & pipewire-pulse
+exec pipewire &
+exec pipewire-pulse &
+exec wireplumber &
+exec --no-startup-id Xwayland :0
+
+#####################
+### RULES WINDOWS ###
+#####################
+# set floating for window roles
+for_window [window_role="About"] floating enable
+for_window [window_role="Organizer"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="page-info"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="toolbox"] floating enable
+for_window [window_role="webconsole"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [app_id="pavucontrol"] floating enable
+for_window [app_id="yad"] floating enable
+for_window [app_id="polkit-ukui-authentication-agent-1"] floating enable
+for_window [app_id="nm-connection-editor"] floating enable
+for_window [app_id="xdg-desktop-portal-gtk"] floating enable
+for_window [title="File Operation Progress"] floating enable, border pixel 1, sticky enable, resize set width 40 ppt height 30 ppt
+for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable;
+for_window [title="(?:Open|Save) (?:File|Folder|As)"] resize set 800 600
+for_window [title="File Operation Progress"] floating enabled
+for_window [title="Confirm to replace files"] floating enable
+for_window [title="Choose Files"] floating enable
+for_window [title="Picture in picture"] floating enable, sticky enable
+
 ##################
 ### Raccourcis ###
 ##################
@@ -114,14 +165,19 @@ bindsym $mod+t exec $term
 bindsym $mod+b exec $browser
 bindsym $mod+d exec $AppMenu
 bindsym $mod+e exec $fileExplorer
+bindsym $mod+m exec $music
+bindsym $mod+n exec $colorpicker
 bindsym $mod+Shift+d exec rofi -show run
 bindsym $mod+v exec pavucontrol
 bindsym $mod+Shift+q exec wlogout
 
 # action
+bindsym $mod+Shift+n exec swaync-client -t -sw
 bindsym $mod+q kill
 bindsym $mod+Ctrl+q exit
 bindsym $mod+Shift+r reload
+bindsym $mod+g splith
+bindsym $mod+h splitv
 bindsym $mod+Up focus up
 bindsym $mod+Down focus down
 bindsym $mod+Left focus left
@@ -133,17 +189,22 @@ bindsym $mod+Shift+Right move right
 bindsym $mod+f fullscreen toggle
 bindsym $mod+space floating toggle
 bindsym $mod+shift+f layout toggle
-bindsym --whole-window $mod+button1 move
-bindsym --whole-window $mod+button3 resize
+floating_modifier $mod normal
+# bindsym $mod+button1 move
 bindsym $mod+Ctrl+Up resize shrink height 15px
 bindsym $mod+Ctrl+Down resize grow height 15px
 bindsym $mod+Ctrl+Left resize shrink width 15px
 bindsym $mod+Ctrl+Right resize grow width 15px
+bindsym $mod+Alt+e exec ~/.config/sway/scripts/rofi_powermenu
 bindsym $mod+w exec swaybg -i ~/Images/leafy-moon.png -m fill
-bindsym $mod+Shift+w exec swaybg -i ~/Images/rosepine-birb.png
+bindsym $mod+Shift+w exec swaybg -i ~/Images/rosepine-birb.png -m fill
+bindsym $mod+c exec ~/.config/sway/scripts/colorpicker
 
-# Special key to take a screenshot with grim
-bindsym Control+p exec grim -g "$(slurp -d)" - | wl-copy
+# Special key to take a screenshot and record
+bindsym Print exec grim -g "$(slurp -d)" - | wl-copy
+bindsym $mod+Print exec ~/.config/sway/scripts/rofi_screenshot
+bindsym $mod+Alt+r exec ~/.config/sway/scripts/rofi_screenrecord
+
 # gestion workspace
 bindsym $mod+ampersand workspace 1
 bindsym $mod+eacute workspace 2
@@ -156,23 +217,14 @@ bindsym $mod+Shift+quotedbl move container to workspace 3
 bindsym $mod+Shift+apostrophe move container to workspace 4
 bindsym $mod+Shift+parenleft move container to workspace 5
 
-############
-### exec ###
-############
-exec dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway &
-exec /usr/libexec/xdg-desktop-portal-gtk &
-exec /usr/libexec/xdg-desktop-portal-wlr &
-exec /usr/libexec/xdg-desktop-portal-gnome &
-exec pipewire &
-exec pipewire-pulse &
-exec wireplumber &
-exec --no-startup-id Xwayland :0
 
+exec_always {
+    export GTK_THEME=Catppuccin-Mocha
+    export GTK_ICON_THEME=Zafiro-Nord-Black-Blue
+    export XCURSOR_THEME=Catppuccin-Mocha
+    export XCURSOR_SIZE=20
+    export XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.local/share
+    xfsettingsd &
+}
 
-for_window [title=".*Calendrier.*"] floating enable
-
-
-
-
-
-
+include /etc/sway/config.d/*
