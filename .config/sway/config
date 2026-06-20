@@ -46,7 +46,7 @@ set $white2 #E5E5E5
 #############
 input * {
    xkb_layout be
-   xkb_variant nodeadkeys
+   # xkb_variant nodeadkeys
    xkb_numlock enabled
 }
 
@@ -107,7 +107,7 @@ workspace 1 output DP-1
 #################
 ### Wallpaper ###
 #################
-exec swaybg -i ~/Downloads/joat5o3lwjea1.png -m fill
+exec swaybg -i /usr/share/sway/wall1.jpg -m fill
 
 ############
 ### exec ###
