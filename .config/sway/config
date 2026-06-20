@@ -114,9 +114,9 @@ exec swaybg -i /usr/share/sway/wall1.jpg -m fill
 ############
 exec wl-paste --type text --watch cliphist store
 exec wl-paste --type images --watch cliphist store
-exec dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway &
+# exec dbus-update-activation-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway &
 exec /usr/libexec/xdg-desktop-portal-wlr &
-exec /usr/libexec/xdg-desktop-portal-gnome &
+# exec /usr/libexec/xdg-desktop-portal-gnome &
 exec /usr/libexec/xdg-desktop-portal-gtk &
 
 
@@ -124,7 +124,7 @@ exec /usr/libexec/xdg-desktop-portal-gtk &
 exec pipewire &
 exec pipewire-pulse &
 exec wireplumber &
-exec --no-startup-id Xwayland :0
+# exec --no-startup-id Xwayland :0
 
 #####################
 ### RULES WINDOWS ###
